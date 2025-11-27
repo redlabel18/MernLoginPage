@@ -104,8 +104,9 @@ export const sendVerifyOtp = async (req, res) => {
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: "Account verification OTP",
-      text: `Bhosdike ye Otp copy paste kar ${otp}`,
-      html:EMAIL_VERIFY_TEMPLATE,
+      text: `OTP ${otp}`,
+      html: EMAIL_VERIFY_TEMPLATE.replace("{{otp}}", otp)
+
     };
     await transporter.sendMail(mailOptions);
     return res.json({ success: true, message: "OTP send on your email" });
@@ -181,8 +182,9 @@ export const sendResetOtp = async (req, res) => {
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: "Reset Password OTP",
-      text: `Bhosdike Password yaad rakha karna lvde, mc is baar tera password reset kar raha hu, Apna password kahi pe likh ke rakh mc, Abhi ye OTP  le ${otp} aur apni gaand me paste kar fir tera password reset karta hu mai`,
-      html:PASSWORD_RESET_TEMPLATE,
+      text: `Otp ${otp} `,
+      html: PASSWORD_RESET_TEMPLATE.replace("{{otp}}", otp)
+
     };
     await transporter.sendMail(mailOptions);
     return res.json({ success: true, message: "OTP send on your email" });
@@ -216,7 +218,7 @@ export const resetPasswordOtpVerify = async (req, res) => {
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: "New Password is set",
-      text: `Bhosdike agli baar Password mat bhulna`,
+      text: `HEHEHEHEHEHee`,
     };
     await transporter.sendMail(mailOptions);
   return res.json({success:true,message:"Password is reset"})
