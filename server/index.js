@@ -10,12 +10,23 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 
-const allowedOrigin =['https://mernloginpage-client.onrender.com']
 //---Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({origin:allowedOrigin,credentials:true}));
+const allowedOrigins = ['https://mernloginpage-client.onrender.com'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
 
 //---Routes
 app.use('/auth',authRouter);
